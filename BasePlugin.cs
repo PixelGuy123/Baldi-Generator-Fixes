@@ -1,4 +1,5 @@
 ﻿using BepInEx;
+using BepInEx.Bootstrap;
 using HarmonyLib;
 
 namespace BBGenFixes.Plugin
@@ -10,7 +11,11 @@ namespace BBGenFixes.Plugin
 		{
 			Harmony harmony = new(ModInfo.GUID);
 			harmony.PatchAll();
+
+			EnableMysteryRoomFix = !Chainloader.PluginInfos.ContainsKey("pixelguy.pixelmodding.baldiplus.bbextracontent");
 		}
+
+		public static bool EnableMysteryRoomFix = true;
 
 	}
 

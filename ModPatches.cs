@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using BBGenFixes.Plugin;
+using HarmonyLib;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using UnityEngine;
@@ -26,6 +27,9 @@ namespace BBGenFixes.Patches
 				new CodeMatch(OpCodes.Call, AccessTools.Method("LevelBuilder:UpdatePotentialRoomSpawns"))) // Goes to a specific line
 			.Insert(Transpilers.EmitDelegate(() =>
 			{
+				if (!BasePlugin.EnableMysteryRoomFix)
+					return 0;
+
 				int amount = 0;
 				Object.FindObjectsOfType<MysteryRoom>().Do(_ => amount++);
 				return amount;
